@@ -1,0 +1,44 @@
+# ===== 参考资料 / 模板（不提交） =====
+114514/
+
+# ===== 敏感配置（含数据库 / OSS / 微信密钥，不入库） =====
+**/application-dev.yml
+**/application-dev.yml~
+
+# ===== 依赖 =====
+node_modules/
+
+# ===== 构建产物 =====
+dist/
+target/
+*.class
+
+# ===== IDE =====
+.idea/
+*.iml
+.vscode/
+
+# ===== 系统文件 =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== 日志 =====
+*.log
+
+# ===== Office 打开文件时生成的临时锁文件 =====
+~$*
+
+# ===== 数据库迁移备份 =====
+_backup_*.sql
+
+# ===== 背景图已迁移至 OSS，本地原图/压缩图不入库 =====
+sakiko-take-out-frontend/src/asset/si.png
+sakiko-take-out-frontend/src/asset/si.webp
+
+# ===== 环境变量（含密钥，不入库） =====
+.env
+
+# ===== 个人作业报告（含姓名学号，不入库） =====
+Linux与云计算大作业报告-*.md
+Linux与云计算大作业报告-*.docx
