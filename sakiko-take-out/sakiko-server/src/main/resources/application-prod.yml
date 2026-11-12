@@ -1,0 +1,28 @@
+# 生产环境配置：敏感信息全部通过环境变量注入（由 docker-compose 的 env_file / .env 提供）
+sakiko:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: ${DB_HOST:mysql}
+    port: ${DB_PORT:3306}
+    database: ${DB_NAME:sakiko_take_out}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:123456}
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+    database: ${REDIS_DATABASE:0}
+  alioss:
+    endpoint: ${OSS_ENDPOINT:oss-cn-beijing.aliyuncs.com}
+    access-key-id: ${OSS_ACCESS_KEY_ID:}
+    access-key-secret: ${OSS_ACCESS_KEY_SECRET:}
+    bucket-name: ${OSS_BUCKET_NAME:}
+  wechat:
+    appid: ${WECHAT_APPID:}
+    secret: ${WECHAT_SECRET:}
+    mchid: ${WECHAT_MCHID:}
+    mchSerialNo: ${WECHAT_MCH_SERIAL_NO:}
+    privateKeyFilePath: ${WECHAT_PRIVATE_KEY_PATH:}
+    apiV3Key: ${WECHAT_API_V3_KEY:}
+    weChatPayCertFilePath: ${WECHAT_CERT_PATH:}
+    notifyUrl: ${WECHAT_NOTIFY_URL:}
+    refundNotifyUrl: ${WECHAT_REFUND_NOTIFY_URL:}
