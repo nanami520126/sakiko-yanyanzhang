@@ -1,0 +1,27 @@
+/* app.wxss —— 缘缘庄 设计 token */
+page {
+  /* 朱砂 & 宣纸 */
+  --cinnabar: #C23A2E;   /* 朱砂红 —— 唯一强强调色 */
+  --ink: #2B2825;        /* 墨色 —— 正文 */
+  --paper: #F5F0E6;      /* 宣纸 —— 页面背景 */
+  --surface: #FFFFFF;    /* 卡面 */
+  --bamboo: #6B8E4E;     /* 竹青 —— 营业中 / 正面状态 */
+  --hairline: #E7DECB;   /* 细线 */
+  --muted: #9A9184;      /* 次要文字 */
+
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+  font-size: 28rpx;
+}
+
+/* 品牌衬线：菜单簿印刷感 */
+.serif {
+  font-family: "Songti SC", "STSong", "SimSun", serif;
+}
+
+/* 通用按钮去边框 */
+button::after {
+  border: none;
+}

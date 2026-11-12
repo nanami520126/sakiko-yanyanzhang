@@ -1,0 +1,153 @@
+<!--pages/index/index.wxml-->
+<view class="page">
+  <!-- 顶部：品牌 + 营业状态 -->
+  <view class="header">
+    <view class="statusbar" style="height:{{statusBarHeight}}px"></view>
+    <view class="header-inner">
+      <view class="brand serif">缘缘庄</view>
+      <view class="status {{shopStatus === 1 ? 'open' : 'closed'}}">
+        <view class="dot"></view>{{shopStatus === 1 ? '营业中' : '打烊中'}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 主体：左分类 + 右列表 -->
+  <view class="body">
+    <scroll-view class="rail" scroll-y>
+      <view
+        wx:for="{{categories}}"
+        wx:key="id"
+        class="rail-item {{activeCategoryId === item.id ? 'active' : ''}}"
+        data-index="{{index}}"
+        bindtap="selectCategory"
+      >
+        <view class="rail-bar"></view>
+        {{item.name}}
+        <view class="rail-tag" wx:if="{{item.type === 2}}">套餐</view>
+      </view>
+    </scroll-view>
+
+    <scroll-view class="list" scroll-y>
+      <view wx:if="{{loading}}" class="empty">加载中…</view>
+      <view
+        wx:for="{{items}}"
+        wx:key="id"
+        class="food"
+        data-index="{{index}}"
+        bindtap="openDetail"
+      >
+        <image class="food-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="food-info">
+          <view class="food-name">{{item.name}}</view>
+          <view class="food-desc" wx:if="{{item.description}}">{{item.description}}</view>
+          <view class="food-bottom">
+            <view class="price serif">¥{{item.price}}</view>
+            <view class="add">＋</view>
+          </view>
+        </view>
+      </view>
+      <view class="empty" wx:if="{{!loading && items.length === 0}}">该分类还没有菜品</view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部购物车条 -->
+  <view class="cartbar">
+    <view class="cart-left" bindtap="openCart">
+      <view class="cart-icon">
+        <view class="cart-badge" wx:if="{{cartCount > 0}}">{{cartCount}}</view>
+      </view>
+      <view class="cart-total serif">¥{{cartTotal}}</view>
+    </view>
+    <view class="checkout" bindtap="checkout">去结算</view>
+  </view>
+
+  <!-- 底部导航 -->
+  <view class="tabbar">
+    <view class="tab-item {{tab === 'index' ? 'active' : ''}}" data-path="/pages/index/index" bindtap="onTabTap">
+      <text class="tab-text">点餐</text>
+      <view class="tab-mark"></view>
+    </view>
+    <view class="tab-item {{tab === 'orders' ? 'active' : ''}}" data-path="/pages/orders/orders" bindtap="onTabTap">
+      <text class="tab-text">订单</text>
+      <view class="tab-mark"></view>
+    </view>
+  </view>
+
+  <!-- 菜品/套餐详情弹窗 -->
+  <view class="mask" wx:if="{{detailVisible}}" bindtap="closeDetail"></view>
+  <view class="popup" wx:if="{{detailVisible}}">
+    <view class="popup-body">
+      <image class="popup-img" src="{{detail.image}}" mode="aspectFill" />
+      <view class="popup-info">
+        <view class="popup-name">{{detail.name}}</view>
+        <view class="popup-desc" wx:if="{{detail.description}}">{{detail.description}}</view>
+
+        <!-- 口味选择 -->
+        <view class="flavor-group" wx:for="{{flavorGroups}}" wx:for-item="g" wx:key="name">
+          <view class="flavor-name">{{g.name}}</view>
+          <view class="flavor-opts">
+            <view
+              wx:for="{{g.values}}"
+              wx:for-item="v"
+              wx:key="*this"
+              class="chip {{selectedFlavors[g.name] === v ? 'chip-active' : ''}}"
+              data-name="{{g.name}}"
+              data-value="{{v}}"
+              bindtap="selectFlavor"
+            >{{v}}</view>
+          </view>
+        </view>
+        <view class="flavor-empty" wx:if="{{detail.kind === 'dish' && flavorGroups.length === 0}}">该菜品暂无口味可选</view>
+
+        <!-- 套餐内容 -->
+        <view class="setmeal-dishes" wx:if="{{detail.kind === 'setmeal'}}">
+          <view class="flavor-name">套餐内容</view>
+          <view class="sd-item" wx:for="{{detailDishes}}" wx:key="name">
+            <text class="sd-name">{{item.name}}</text>
+            <text class="sd-copies" wx:if="{{item.copies}}">×{{item.copies}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="popup-footer">
+      <view class="popup-price serif">¥{{detail.price}}</view>
+      <view class="add-cart" bindtap="addToCart">加入购物车</view>
+    </view>
+  </view>
+
+  <!-- 购物车弹层 -->
+  <view class="mask" wx:if="{{cartVisible}}" bindtap="closeCart"></view>
+  <view class="cart-popup" wx:if="{{cartVisible}}">
+    <view class="cart-head">
+      <view class="cart-title">购物车</view>
+      <view class="cart-actions">
+        <view class="cart-clear" bindtap="clearCart">清空</view>
+        <view class="cart-close" bindtap="closeCart">×</view>
+      </view>
+    </view>
+    <view class="cart-list">
+      <view class="cart-row" wx:for="{{cartItems}}" wx:key="id">
+        <image class="cart-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="cart-info">
+          <view class="cart-name">{{item.name}}</view>
+          <view class="cart-flavor" wx:if="{{item.dishFlavor}}">{{item.dishFlavor}}</view>
+          <view class="cart-price serif">¥{{item.amount}}</view>
+        </view>
+        <view class="stepper">
+          <view class="step-num">×{{item.number}}</view>
+          <view class="step-btn plus" data-index="{{index}}" bindtap="incItem">＋</view>
+        </view>
+      </view>
+      <view class="empty" wx:if="{{cartItems.length === 0}}">购物车是空的</view>
+    </view>
+  </view>
+
+  <!-- 登录弹窗 -->
+  <view class="mask" wx:if="{{loginVisible}}" bindtap="closeLogin"></view>
+  <view class="login-popup" wx:if="{{loginVisible}}">
+    <view class="login-brand serif">缘缘庄</view>
+    <view class="login-title">登录后即可下单</view>
+    <button class="login-btn" loading="{{loginLoading}}" bindtap="doLogin">微信一键登录</button>
+    <view class="login-skip" bindtap="closeLogin">先逛逛</view>
+  </view>
+</view>

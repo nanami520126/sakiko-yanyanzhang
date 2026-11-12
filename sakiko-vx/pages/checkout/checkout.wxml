@@ -1,0 +1,66 @@
+<!--pages/checkout/checkout.wxml-->
+<navigation-bar title="确认订单" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="page">
+  <view class="body">
+    <!-- 地址 -->
+    <view class="card" bindtap="selectAddress">
+      <view class="addr" wx:if="{{address}}">
+        <view class="addr-top">
+          <text class="addr-name">{{address.consignee}}</text>
+          <text class="addr-phone">{{address.phone}}</text>
+        </view>
+        <view class="addr-detail">{{address.provinceName}}{{address.cityName}}{{address.districtName}}{{address.detail}}</view>
+      </view>
+      <view class="addr-empty" wx:else>请选择收货地址</view>
+      <view class="addr-arrow">›</view>
+    </view>
+
+    <!-- 商品 -->
+    <view class="card">
+      <view class="card-title">商品清单</view>
+      <view class="item" wx:for="{{cartItems}}" wx:key="id">
+        <image class="item-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="item-info">
+          <view class="item-name">{{item.name}}</view>
+          <view class="item-flavor" wx:if="{{item.dishFlavor}}">{{item.dishFlavor}}</view>
+        </view>
+        <view class="item-right">
+          <view class="item-price serif">¥{{item.amount}}</view>
+          <view class="item-num">×{{item.number}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 备注 -->
+    <view class="card">
+      <view class="card-title">备注</view>
+      <input class="remark" placeholder="口味偏好、是否需要筷子等（选填）" value="{{remark}}" bindinput="onRemark" />
+    </view>
+
+    <!-- 金额 -->
+    <view class="card">
+      <view class="row">
+        <text>商品小计</text>
+        <text class="serif">¥{{goodsAmount}}</text>
+      </view>
+      <view class="row">
+        <text>打包费</text>
+        <text class="serif">¥{{packAmount}}</text>
+      </view>
+      <view class="row total">
+        <text>合计</text>
+        <text class="serif total-price">¥{{totalAmount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提交 -->
+  <view class="footer">
+    <view class="footer-total">
+      <text class="label">应付</text>
+      <text class="serif amount">¥{{totalAmount}}</text>
+    </view>
+    <view class="submit-btn" bindtap="submit">提交订单</view>
+  </view>
+</view>

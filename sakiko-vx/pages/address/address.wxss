@@ -1,0 +1,87 @@
+/* pages/address/address.wxss */
+.page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20rpx 24rpx 140rpx;
+  box-sizing: border-box;
+}
+.addr-card {
+  background: var(--surface);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+.addr-top {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+.addr-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--ink);
+}
+.addr-phone {
+  font-size: 26rpx;
+  color: var(--muted);
+}
+.badge {
+  font-size: 20rpx;
+  color: var(--cinnabar);
+  border: 1rpx solid var(--cinnabar);
+  border-radius: 6rpx;
+  padding: 0 8rpx;
+}
+.addr-detail {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.addr-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 24rpx;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid var(--hairline);
+}
+.act {
+  font-size: 24rpx;
+  color: var(--ink);
+  padding: 4rpx 8rpx;
+}
+.act.del {
+  color: var(--cinnabar);
+}
+.empty {
+  padding: 80rpx 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 28rpx;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20rpx 24rpx;
+  background: var(--surface);
+  border-top: 1rpx solid var(--hairline);
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+}
+.add-btn {
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  background: var(--cinnabar);
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 999rpx;
+}

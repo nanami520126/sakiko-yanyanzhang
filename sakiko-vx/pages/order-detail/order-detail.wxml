@@ -1,0 +1,74 @@
+<!--pages/order-detail/order-detail.wxml-->
+<navigation-bar title="订单详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="page" wx:if="{{order}}">
+  <view class="body">
+    <!-- 状态 -->
+    <view class="status-card {{order.statusCls}}">
+      <view class="status-text">{{order.statusText}}</view>
+      <view class="status-sub" wx:if="{{order.status === 1}}">请尽快完成支付</view>
+    </view>
+
+    <!-- 收货信息 -->
+    <view class="card">
+      <view class="card-title">收货信息</view>
+      <view class="addr-top">
+        <text class="addr-name">{{order.consignee}}</text>
+        <text class="addr-phone">{{order.phone}}</text>
+      </view>
+      <view class="addr-detail">{{order.address}}</view>
+    </view>
+
+    <!-- 商品清单 -->
+    <view class="card">
+      <view class="card-title">商品清单</view>
+      <view class="item" wx:for="{{order.orderDetailList}}" wx:key="id">
+        <image class="item-img" src="{{item.image}}" mode="aspectFill" />
+        <view class="item-info">
+          <view class="item-name">{{item.name}}</view>
+          <view class="item-flavor" wx:if="{{item.dishFlavor}}">{{item.dishFlavor}}</view>
+        </view>
+        <view class="item-right">
+          <view class="item-price serif">¥{{item.amount}}</view>
+          <view class="item-num">×{{item.number}}</view>
+        </view>
+      </view>
+      <view class="empty" wx:if="{{order.orderDetailList.length === 0}}">暂无商品明细</view>
+    </view>
+
+    <!-- 金额 -->
+    <view class="card">
+      <view class="row">
+        <text>打包费</text>
+        <text class="serif">¥{{order.packAmount}}</text>
+      </view>
+      <view class="row total">
+        <text>实付</text>
+        <text class="serif total-price">¥{{order.amount}}</text>
+      </view>
+    </view>
+
+    <!-- 订单信息 -->
+    <view class="card">
+      <view class="card-title">订单信息</view>
+      <view class="row">
+        <text>订单编号</text>
+        <text>{{order.number}}</text>
+      </view>
+      <view class="row">
+        <text>下单时间</text>
+        <text>{{order.orderTime}}</text>
+      </view>
+      <view class="row" wx:if="{{order.remark}}">
+        <text>备注</text>
+        <text>{{order.remark}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="footer" wx:if="{{order.canCancel || order.canRepetition}}">
+    <view class="btn ghost" wx:if="{{order.canCancel}}" bindtap="cancelOrder">取消订单</view>
+    <view class="btn primary" wx:if="{{order.canRepetition}}" bindtap="repetition">再来一单</view>
+  </view>
+</view>

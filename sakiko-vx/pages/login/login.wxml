@@ -1,0 +1,15 @@
+<!--pages/login/login.wxml-->
+<view class="login-page">
+  <view class="login-box">
+    <view class="logo">缘缘庄</view>
+    <view class="title">欢迎使用缘缘庄点餐</view>
+    <button
+      class="login-btn"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+      bindtap="handleLogin"
+    >
+      微信一键登录
+    </button>
+  </view>
+</view>
