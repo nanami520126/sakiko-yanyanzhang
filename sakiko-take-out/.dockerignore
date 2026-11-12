@@ -1,0 +1,9 @@
+target/
+*.iml
+.idea/
+.git/
+*.log
+
+# 本地开发配置（含密钥），不打包进镜像
+**/application-dev.yml
+**/application-dev.yml~
